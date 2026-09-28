@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Perfil {
+public class Perfis {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
