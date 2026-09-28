@@ -1,6 +1,6 @@
 package br.com.e_commerce.api.user.entity;
 
-import br.com.e_commerce.api.perfis.Perfis;
+import br.com.e_commerce.api.perfis.entity.Perfis;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +31,7 @@ public class Usuarios implements UserDetails {
     @Column(name = "email", unique = true, nullable = false, length = 160)
     private String email;
 
-    @Column(name = "password", nullable = false, length = 255)
+    @Column(name = "senha", nullable = false, length = 255)
     private String senha;
 
     @Column(name = "criado_em", nullable = false)
@@ -50,12 +50,12 @@ public class Usuarios implements UserDetails {
 
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return this.senha;
     }
 
     @Override
     public String getUsername() {
-        return getUsername();
+        return this.nome;
     }
 
     @Override
