@@ -21,4 +21,5 @@ public class Perfis {
     @Column(name = "nome", unique = true, nullable = false, length = 30)
     private PerfilNome nome;
 
+
 }
