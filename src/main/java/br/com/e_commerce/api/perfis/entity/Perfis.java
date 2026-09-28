@@ -1,4 +1,4 @@
-package br.com.e_commerce.api.perfis;
+package br.com.e_commerce.api.perfis.entity;
 
 import br.com.e_commerce.api.perfis.enums.PerfilNome;
 import jakarta.persistence.*;
