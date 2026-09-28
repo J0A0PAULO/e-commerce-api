@@ -1,5 +1,6 @@
 package br.com.e_commerce.api.perfis;
 
+import br.com.e_commerce.api.perfis.enums.PerfilNome;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Perfis {
+public class Perfil {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +19,6 @@ public class Perfis {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "nome", unique = true, nullable = false, length = 30)
-    private String nome;
+    private PerfilNome nome;
 
 }
