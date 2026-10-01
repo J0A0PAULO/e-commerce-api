@@ -23,5 +23,4 @@ public class PerfilController {
             PerfilResponse alterar = perfilService.alterar(id, perfilRequest);
             return ResponseEntity.ok(alterar);
         }
-
 }
