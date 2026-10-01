@@ -29,21 +29,22 @@ public class AdmUserInitializer {
 
         return args -> {
 
-            Perfis perfilADm = perfisRepository.findByNome(PerfilNome.ROLE_ADM).orElseGet( () -> {
+            Perfis perfilADm = perfisRepository.findByNome(PerfilNome.ROLE_ADM ).orElseGet( () -> {
                 Perfis novoPerfil = new Perfis();
                 novoPerfil.setNome(PerfilNome.ROLE_ADM);
                 perfisRepository.save(novoPerfil);
                 return novoPerfil;
             });
 
-            if (usuariosRepository.findBynome("admin").isEmpty()){
+            if (usuariosRepository.findByEmail("admin@gmail.com").isEmpty()){
                 Usuarios admin = new Usuarios();
                 admin.setNome("admin");
                 admin.setSenha(passwordEncoder.encode("123"));
                 admin.setEmail("admin@gmail.com");
-                admin.setPerfis(perfilADm);
+                admin.setPerfil(perfilADm);
                 usuariosRepository.save(admin);
             }
+
        };
     }
 
