@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
@@ -40,12 +41,15 @@ public class Usuarios implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name = "perfil_id", nullable = false)
-    private Perfis perfis;
+    private Perfis perfil;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        if (this.perfil == null || this.perfil.getNome() == null) {
+            return List.of();
+        }
+        return List.of(new SimpleGrantedAuthority(this.perfil.getNome().name()));
     }
 
     @Override
@@ -55,7 +59,7 @@ public class Usuarios implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.nome;
+        return this.email;
     }
 
     @Override
