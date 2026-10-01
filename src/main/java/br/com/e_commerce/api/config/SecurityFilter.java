@@ -35,7 +35,6 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (Strings.isNotEmpty(authorizaedHeader) && authorizaedHeader.startsWith("Bearer ")) {
             String token = authorizaedHeader.substring("Bearer ".length());
             Optional<JWTUserData> optUsuario = tokenConfig.validationToken(token);
-
             if (optUsuario.isPresent()) {
                 JWTUserData userData = optUsuario.get();
 
