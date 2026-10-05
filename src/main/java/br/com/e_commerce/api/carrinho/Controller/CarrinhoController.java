@@ -8,6 +8,7 @@ import br.com.e_commerce.api.user.entity.Usuarios;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,29 +24,32 @@ public class CarrinhoController {
         this.carrinhoService = carrinhoService;
     }
 
-    @PostMapping("/criar")
+    @PreAuthorize("hasRole('CLIENT')")
+    @PostMapping("/adicionar")
     public ResponseEntity<CarrinhoResponse> adicionarProdutoAoCarrinho(@RequestBody @Valid CarrinhoRequest carrinhoRequest, @AuthenticationPrincipal Usuarios usuarios) {
         CarrinhoResponse carrinhoResponse = carrinhoService.adicionarCarrinho(usuarios, carrinhoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(carrinhoResponse);
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     @PutMapping("/alterarQuantidade")
     public ResponseEntity<CarrinhoResponse> alterarQuantidade(@AuthenticationPrincipal Usuarios usuario,@RequestBody @Valid CarrinhoRequest carrinhoRequest) {
         CarrinhoResponse carrinhoResponse = carrinhoService.alterarQuantidade(carrinhoRequest, usuario);
         return ResponseEntity.ok(carrinhoResponse);
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/listar")
     public ResponseEntity<List<CarrinhoResponse>> listar(@AuthenticationPrincipal Usuarios usuario) {
         List<CarrinhoResponse> carrinhoResponses = carrinhoService.listarCarrinho(usuario);
         return ResponseEntity.ok(carrinhoResponses);
     }
 
+    @PreAuthorize("hasRole('CLIENT')")
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         carrinhoService.deletar(id);
         return ResponseEntity.noContent().build();
     }
-
 
 }
