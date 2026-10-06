@@ -36,7 +36,8 @@ public class Produtos {
     private BigDecimal preco;
 
     @Column(name = "estoque", nullable = false)
-    @Min(value = 0, message = "estoque do produto deve ser maior ou igual a zero")  private Integer estoque;
+    @Min(value = 0, message = "estoque do produto deve ser maior ou igual a zero")
+    private Integer estoque;
 
     @Column(name = "categoria")
     private String categoria;
