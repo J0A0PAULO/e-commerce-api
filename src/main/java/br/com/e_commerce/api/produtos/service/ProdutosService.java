@@ -7,6 +7,9 @@ import br.com.e_commerce.api.produtos.dto.ProdutoResponse;
 import br.com.e_commerce.api.produtos.entity.Produtos;
 import br.com.e_commerce.api.produtos.mapper.ProdutosMapper;
 import br.com.e_commerce.api.produtos.repository.ProdutosRepository;
+import br.com.e_commerce.api.user.entity.Usuarios;
+import br.com.e_commerce.api.user.repository.UsuariosRepository;
+import br.com.e_commerce.api.user.service.UsuarioService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +21,12 @@ public class ProdutosService {
 
     private final ProdutosRepository produtosRepository;
     private final ProdutosMapper produtosMapper;
+    private final UsuariosRepository usuariosRepository;
 
-    public ProdutosService(ProdutosRepository produtosRepository, ProdutosMapper produtosMapper) {
+    public ProdutosService(ProdutosRepository produtosRepository, ProdutosMapper produtosMapper, UsuariosRepository usuariosRepository) {
         this.produtosRepository = produtosRepository;
         this.produtosMapper = produtosMapper;
+        this.usuariosRepository = usuariosRepository;
     }
 
     public List<ProdutoResponse> listarTodosProdutos() {
@@ -51,9 +56,12 @@ public class ProdutosService {
     }
 
     @Transactional
-    public ProdutoResponse criarProduto(ProdutoRequest request) {
+    public ProdutoResponse criarProduto(ProdutoRequest request, Long id) {
+
+        Usuarios usuarios = usuariosRepository.findById(id).orElseThrow(() -> new NotFound());
 
         Produtos produto = produtosMapper.toEntity(request);
+        produto.setCriadoPor(usuarios);
 
         produtosRepository.save(produto);
 
@@ -72,7 +80,7 @@ public class ProdutosService {
 
     public List<ProdutoResponse> listarProdutosPorPrecoCrecente(String nome) {
 
-        List<ProdutoResponse> listarPrecoCrecente = produtosRepository.findByNomeOrderByPrecoAsc(nome)
+        List<ProdutoResponse> listarPrecoCrecente = produtosRepository.findByCategoriaOrderByPrecoDesc(nome)
                 .stream().map(produtos -> produtosMapper.toDTO(produtos)).toList();
 
         return listarPrecoCrecente;
