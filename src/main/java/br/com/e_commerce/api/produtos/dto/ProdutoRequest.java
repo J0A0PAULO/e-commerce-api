@@ -32,6 +32,8 @@ public class ProdutoRequest {
     @NotNull(message = "status ativo é obrigatorio")
     private Boolean ativo = true;
 
-    @NotNull(message = "o id do criador é obrigatorio")
-    private Long id;
+    @NotNull(message = "estoque é obrigatorio")
+    @Min(value = 0, message = "valor deve ser maior que 0")
+    private Integer estoque;
+
 }

@@ -26,7 +26,5 @@ public class ProdutoResponse {
     private Boolean ativo;
     private LocalDateTime criadoEm;
     private LocalDateTime atualizadoEm;
-    private Usuarios criadoPor;
-
 
 }
