@@ -1,7 +1,7 @@
 package br.com.e_commerce.api.carrinho.service;
 
 import br.com.e_commerce.api.carrinho.Entity.Carrinho;
-import br.com.e_commerce.api.carrinho.Repository.CarrinhoRepository;
+import br.com.e_commerce.api.carrinho.repository.CarrinhoRepository;
 import br.com.e_commerce.api.carrinho.dto.CarrinhoRequest;
 import br.com.e_commerce.api.carrinho.dto.CarrinhoResponse;
 import br.com.e_commerce.api.carrinho.mapper.CarrinhoMapper;
@@ -31,13 +31,13 @@ public class CarrinhoService {
         this.usuariosRepository = usuariosRepository;
     }
 
-    public CarrinhoResponse adicionarCarrinho(Usuarios usuarios, CarrinhoRequest request) {
+    public CarrinhoResponse adicionarCarrinho(Long id, CarrinhoRequest request) {
 
         Produtos produto = produtosRepository.findById(request.getIdProduto()).orElseThrow(() -> new NotFound());
 
-        Usuarios usuario = usuariosRepository.findById(usuarios.getId()).orElseThrow(() -> new NotFound());
+        Usuarios usuario = usuariosRepository.findById(id).orElseThrow(() -> new NotFound());
 
-        Optional<Carrinho> byUsuarioAndProduto = carrinhoRepository.findByUsuarioAndProduto(usuario, produto);
+        Optional<Carrinho> byUsuarioAndProduto = carrinhoRepository.findByUsuarioIdAndProduto(id, produto);
 
         if (byUsuarioAndProduto.isPresent()) {
 
@@ -52,8 +52,8 @@ public class CarrinhoService {
             primeiroProduto.setProduto(produto);
             primeiroProduto.setUsuario(usuario);
             primeiroProduto.setQuantidade(request.getQuantidade());
-            carrinhoRepository.save(primeiroProduto);
-            return carrinhoMapper.toDTO(primeiroProduto);
+            Carrinho save = carrinhoRepository.save(primeiroProduto);
+            return carrinhoMapper.toDTO(save);
         }
     }
 
@@ -63,11 +63,11 @@ public class CarrinhoService {
         return listaProdutos;
     }
 
-    public CarrinhoResponse alterarQuantidade(CarrinhoRequest request, Usuarios usuarios) {
+    public CarrinhoResponse alterarQuantidade(CarrinhoRequest request, Long id) {
 
         Produtos produto = produtosRepository.findById(request.getIdProduto()).orElseThrow(() -> new NotFound());
 
-        Carrinho carrinho = carrinhoRepository.findByUsuarioAndProduto(usuarios, produto).orElseThrow(() -> new NotFound());
+        Carrinho carrinho = carrinhoRepository.findByUsuarioIdAndProduto(id, produto).orElseThrow(() -> new NotFound());
 
         carrinho.setQuantidade(request.getQuantidade());
 
