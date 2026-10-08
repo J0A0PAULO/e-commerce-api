@@ -16,7 +16,7 @@ public class CarrinhoRequest {
     @NotNull(message = "o id do produto é obrigatorio")
     private Long idProduto;
 
-    @Min(value = 0, message = "quantidade tem de ser 0 ou maior")
+    @Min(value = 1, message = "quantidade tem de ser 0 ou maior")
     @NotNull(message = "quantidade é obrigatoria")
     private Integer quantidade;
 }
