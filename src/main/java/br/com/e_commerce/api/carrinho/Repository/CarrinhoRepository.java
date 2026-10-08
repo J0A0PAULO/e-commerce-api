@@ -1,4 +1,4 @@
-package br.com.e_commerce.api.carrinho.Repository;
+package br.com.e_commerce.api.carrinho.repository;
 
 import br.com.e_commerce.api.carrinho.Entity.Carrinho;
 import br.com.e_commerce.api.produtos.entity.Produtos;
@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
 
-    Optional<Carrinho> findByUsuarioAndProduto(Usuarios usuarios, Produtos produto);
+    Optional<Carrinho> findByUsuarioIdAndProduto(Long id, Produtos produto);
 
     List<Carrinho> findByUsuario(Usuarios usuarios);
 
