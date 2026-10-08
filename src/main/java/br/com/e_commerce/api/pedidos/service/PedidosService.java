@@ -12,9 +12,11 @@ import br.com.e_commerce.api.pedidos.repository.PedidosRepository;
 import br.com.e_commerce.api.produtos.entity.Produtos;
 import br.com.e_commerce.api.produtos.repository.ProdutosRepository;
 import br.com.e_commerce.api.user.entity.Usuarios;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class PedidosService {
@@ -24,6 +26,7 @@ public class PedidosService {
     private final MercadoPagoService mercadoPagoService;
     private final PedidosMapper pedidosMapper;
 
+
     public PedidosService(PedidosRepository pedidosRepository, ProdutosRepository produtosRepository, MercadoPagoService mercadoPagoService, PedidosMapper pedidosMapper) {
         this.pedidosRepository = pedidosRepository;
         this.produtosRepository = produtosRepository;
@@ -31,6 +34,12 @@ public class PedidosService {
         this.pedidosMapper = pedidosMapper;
     }
 
+    public List<PedidoReponse> mostrarPedidos() {
+       return pedidosRepository.findAll().stream().map(pedidos -> pedidosMapper.toDTO(pedidos)).toList();
+    }
+
+
+    @Transactional
     public PedidoReponse criarPedido(Usuarios usuarios, CriarPedidoRequest request) {
 
         Pedidos pedido = new Pedidos();
@@ -81,6 +90,7 @@ public class PedidosService {
 
     }
 
+    @Transactional
     public void processarNotificacaoPagamento(String pagamentoIdGateWay) {
 
         MercadoPagoPixResponse mercadoPagoPixResponse = mercadoPagoService.buscarPagamentoPorId(pagamentoIdGateWay);
