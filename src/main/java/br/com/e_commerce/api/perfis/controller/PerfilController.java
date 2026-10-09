@@ -1,4 +1,4 @@
-package br.com.e_commerce.api.perfis.Controller;
+package br.com.e_commerce.api.perfis.controller;
 
 import br.com.e_commerce.api.perfis.Service.PerfilService;
 import br.com.e_commerce.api.perfis.dto.PerfilRequest;
@@ -6,6 +6,7 @@ import br.com.e_commerce.api.perfis.dto.PerfilResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,6 +19,7 @@ public class PerfilController {
         this.perfilService = perfilService;
     }
 
+        @PreAuthorize("hasRola('ADM')")
         @PutMapping("/alterar/{id}")
         public ResponseEntity<PerfilResponse> alterar(@PathVariable Long id, @Valid @RequestBody PerfilRequest perfilRequest) {
             PerfilResponse alterar = perfilService.alterar(id, perfilRequest);
