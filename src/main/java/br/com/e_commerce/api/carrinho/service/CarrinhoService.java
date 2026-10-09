@@ -58,8 +58,8 @@ public class CarrinhoService {
     }
 
 
-    public List<CarrinhoResponse> listarCarrinho(Usuarios usuarios) {
-        List<CarrinhoResponse> listaProdutos = carrinhoRepository.findByUsuario(usuarios).stream().map(produtos -> carrinhoMapper.toDTO(produtos)).toList();
+    public List<CarrinhoResponse> listarCarrinho(Long usuarioId) {
+        List<CarrinhoResponse> listaProdutos = carrinhoRepository.findByUsuarioId(usuarioId).stream().map(produtos -> carrinhoMapper.toDTO(produtos)).toList();
         return listaProdutos;
     }
 

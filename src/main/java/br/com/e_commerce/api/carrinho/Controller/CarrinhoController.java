@@ -31,7 +31,7 @@ public class CarrinhoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(carrinhoResponse);
     }
 
-    @PreAuthorize("hasRole('CLIENT')")
+
     @PutMapping("/alterarQuantidade")
     public ResponseEntity<CarrinhoResponse> alterarQuantidade(@AuthenticationPrincipal JWTUserData jwtUserData,@RequestBody @Valid CarrinhoRequest carrinhoRequest) {
         CarrinhoResponse carrinhoResponse = carrinhoService.alterarQuantidade(carrinhoRequest, jwtUserData.getUserId());
@@ -40,8 +40,8 @@ public class CarrinhoController {
 
     @PreAuthorize("hasRole('CLIENT')")
     @GetMapping("/listar")
-    public ResponseEntity<List<CarrinhoResponse>> listar(@AuthenticationPrincipal Usuarios usuario) {
-        List<CarrinhoResponse> carrinhoResponses = carrinhoService.listarCarrinho(usuario);
+    public ResponseEntity<List<CarrinhoResponse>> listar(@AuthenticationPrincipal JWTUserData usuario) {
+        List<CarrinhoResponse> carrinhoResponses = carrinhoService.listarCarrinho(usuario.getUserId());
         return ResponseEntity.ok(carrinhoResponses);
     }
 
