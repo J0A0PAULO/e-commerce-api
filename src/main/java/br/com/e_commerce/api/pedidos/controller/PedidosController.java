@@ -28,12 +28,12 @@ public class PedidosController {
 
     @PreAuthorize("hasRole('CLIENT')")
     @PostMapping("/comprar")
-    public ResponseEntity<PedidoReponse> comprarProdutos(@AuthenticationPrincipal Usuarios usuarios, @RequestBody CriarPedidoRequest criarPedidoRequest) {
-        PedidoReponse pedidoReponse = pedidosService.criarPedido(usuarios, criarPedidoRequest);
+    public ResponseEntity<PedidoReponse> comprarProdutos(@AuthenticationPrincipal JWTUserData usuarios, @RequestBody CriarPedidoRequest criarPedidoRequest) {
+        PedidoReponse pedidoReponse = pedidosService.criarPedido(usuarios.getUserId(), criarPedidoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidoReponse);
     }
 
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasRole('CLIENT', 'ADM')")
     public ResponseEntity<List<PedidoReponse>> listarPedidos() {
         List<PedidoReponse> pedidoReponses = pedidosService.mostrarPedidos();
         return ResponseEntity.ok(pedidoReponses);

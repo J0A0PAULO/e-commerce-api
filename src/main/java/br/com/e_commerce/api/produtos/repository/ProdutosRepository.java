@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface ProdutosRepository extends JpaRepository<Produtos, Long> {
 
     List<Produtos> findByCategoria(String categorias);
-    List<Produtos> findByCategoriaOrderByPrecoDesc(String categoria);
+    List<Produtos> findByCategoriaOrderByPrecoAsc(String categoria);
+    List<Produtos> findByAtivoTrue(Boolean ativo);
 
 }

@@ -29,14 +29,16 @@ public class ProdutosService {
         this.usuariosRepository = usuariosRepository;
     }
 
+    @Transactional
     public List<ProdutoResponse> listarTodosProdutos() {
 
-        List<ProdutoResponse> list = produtosRepository.findAll()
+        List<ProdutoResponse> list = produtosRepository.findByAtivoTrue(true)
                 .stream().map(produtos -> produtosMapper.toDTO(produtos)).toList();
 
         return list;
     }
 
+    @Transactional
     public ProdutoResponse listarPorID(Long id) {
         Produtos produtosPorID = produtosRepository.findById(id).orElseThrow(() -> new NotFound());
         return produtosMapper.toDTO(produtosPorID);
@@ -69,6 +71,7 @@ public class ProdutosService {
 
     }
 
+    @Transactional
     public List<ProdutoResponse> listarPorCategoria(String categoria){
 
         List<ProdutoResponse> listCategorias = produtosRepository.findByCategoria(categoria)
@@ -78,9 +81,10 @@ public class ProdutosService {
         return listCategorias;
     }
 
+    @Transactional
     public List<ProdutoResponse> listarProdutosPorPrecoCrecente(String nome) {
 
-        List<ProdutoResponse> listarPrecoCrecente = produtosRepository.findByCategoriaOrderByPrecoDesc(nome)
+        List<ProdutoResponse> listarPrecoCrecente = produtosRepository.findByCategoriaOrderByPrecoAsc(nome)
                 .stream().map(produtos -> produtosMapper.toDTO(produtos)).toList();
 
         return listarPrecoCrecente;

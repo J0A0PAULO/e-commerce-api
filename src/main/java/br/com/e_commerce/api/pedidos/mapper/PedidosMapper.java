@@ -1,23 +1,16 @@
 package br.com.e_commerce.api.pedidos.mapper;
 
-import br.com.e_commerce.api.pedidos.dto.MercadoPagoPixRequest;
-import br.com.e_commerce.api.pedidos.dto.MercadoPagoPixResponse;
-import br.com.e_commerce.api.pedidos.dto.PedidoReponse;
+import br.com.e_commerce.api.itemPedido.entity.ItemPedido;
+import br.com.e_commerce.api.pedidos.dto.PedidoResponse;
 import br.com.e_commerce.api.pedidos.entity.Pedidos;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface PedidosMapper {
 
-    Pedidos toEntity(MercadoPagoPixRequest request);
+    PedidoResponse toDTO(Pedidos pedido);
 
-    PedidoReponse toDTO(Pedidos pedidos);
-
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void toEntityConvert(MercadoPagoPixRequest pedido, @MappingTarget Pedidos pedidos);
-
+    @Mapping(target = "produtoId", source = "produto.id")
+    @Mapping(target = "nome", source = "produto.nome")
+    PedidoResponse.ItemPedidoResponse toItemDTO(ItemPedido item);
 }

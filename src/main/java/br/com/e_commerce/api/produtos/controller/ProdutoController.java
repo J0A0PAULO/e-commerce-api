@@ -34,7 +34,7 @@ public class ProdutoController {
         return ResponseEntity.ok(produtoResponses);
     }
 
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasRole('CLIENT, 'ADM')")
     @GetMapping("/{id}")
     public ResponseEntity<ProdutoResponse> listarProdutoPorId(@PathVariable Long id) {
         ProdutoResponse produtoResponse = produtosService.listarPorID(id);
@@ -62,15 +62,15 @@ public class ProdutoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("hasRole('CLIENT')")
+    @PreAuthorize("hasRole('CLIENT','ADM')")
     @GetMapping("/categoria")
     public ResponseEntity<List<ProdutoResponse>> listarPorCateogira(@RequestParam("nome") String nome) {
         List<ProdutoResponse> listarPorCategoria = produtosService.listarPorCategoria(nome);
 
         return ResponseEntity.ok(listarPorCategoria);
-
     }
-    @PreAuthorize("hasRole('CLIENT')")
+
+    @PreAuthorize("hasRole('CLIENT', 'ADM')")
     @GetMapping("/categoria/ordenar")
     public ResponseEntity<List<ProdutoResponse>> listarOrdenadoPorPreco(@RequestParam("nome") String nome){
 

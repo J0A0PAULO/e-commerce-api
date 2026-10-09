@@ -30,7 +30,7 @@ public class ProdutoRequest {
     private String categoria;
 
     @NotNull(message = "status ativo é obrigatorio")
-    private Boolean ativo = true;
+    private Boolean ativo = false;
 
     @NotNull(message = "estoque é obrigatorio")
     @Min(value = 0, message = "valor deve ser maior que 0")

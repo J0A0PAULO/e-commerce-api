@@ -28,21 +28,19 @@ public class UsuarioService {
     private final UsuariosRepository usuariosRepository;
     private final PasswordEncoder passwordEncoder;
     private final PerfisRepository perfisRepository;
-    private final UsuarioMapper usuarioMapper;
     private final AuthenticationManager authenticationManager;
     private final TokenConfig tokenConfig;
 
 
-    public UsuarioService(UsuariosRepository usuariosRepository,PasswordEncoder passwordEncoder,PerfisRepository perfisRepository,UsuarioMapper usuarioMapper, AuthenticationManager authenticationManager,TokenConfig tokenConfig) {
+    public UsuarioService(UsuariosRepository usuariosRepository, PasswordEncoder passwordEncoder, PerfisRepository perfisRepository, UsuarioMapper usuarioMapper, AuthenticationManager authenticationManager, TokenConfig tokenConfig) {
         this.usuariosRepository = usuariosRepository;
         this.passwordEncoder = passwordEncoder;
         this.perfisRepository = perfisRepository;
-        this.usuarioMapper = usuarioMapper;
         this.authenticationManager = authenticationManager;
-        this.tokenConfig  = tokenConfig;
+        this.tokenConfig = tokenConfig;
     }
 
-    public UsuarioToken login (LoginRequest loginRequest) {
+    public UsuarioToken login(LoginRequest loginRequest) {
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getSenha());
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
@@ -56,12 +54,11 @@ public class UsuarioService {
     }
 
 
-
-
     public UsuarioResponse usuarioRegistro(UsuarioRequest request) {
         UsuarioResponse registro = registro(request, PerfilNome.ROLE_CLIENT);
         return registro;
     }
+
     public UsuarioResponse adminRegistro(UsuarioRequest request) {
         UsuarioResponse registro = registro(request, PerfilNome.ROLE_ADM);
         return registro;
@@ -87,6 +84,7 @@ public class UsuarioService {
         return usuarioResponse;
 
     }
+
     private UsuarioResponse registroUser(UsuarioRequest request, PerfilNome perfilNome) {
 
         Usuarios usuarios = new Usuarios();

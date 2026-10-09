@@ -20,4 +20,9 @@ public class GlobalExeptionHandler{
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(badRequest.getMessage());
     }
 
+    @ExceptionHandler(PagamentoException.class)
+    public ResponseEntity<String> pagamento(PagamentoException e) {
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(e.getMessage());
+    }
+
 }
