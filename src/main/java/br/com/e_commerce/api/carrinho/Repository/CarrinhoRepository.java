@@ -12,6 +12,6 @@ public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
 
     Optional<Carrinho> findByUsuarioIdAndProduto(Long id, Produtos produto);
 
-    List<Carrinho> findByUsuario(Usuarios usuarios);
+    List<Carrinho> findByUsuarioId(Long id);
 
 }
