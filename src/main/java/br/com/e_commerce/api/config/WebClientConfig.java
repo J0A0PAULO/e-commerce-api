@@ -17,7 +17,7 @@ public class WebClientConfig {
 
     public WebClient webClient() {
         return WebClient.builder().
-                defaultHeader("Authorization", "Bearer" + token).
+                defaultHeader("Authorization", "Bearer " + token).
                 baseUrl(url).build();
     }
 
